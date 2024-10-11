@@ -1,24 +1,29 @@
 "use client";
-import { useEffect } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import BottleScene from "@/components/Bottle";
+import HouseScene from "@/components/House";
+import { OceanScene } from "@/components/Ocean";
 import { Canvas } from "@react-three/fiber";
+import { Suspense } from "react";
+import KeyboardControlledCamera from "../components/KeyboardControlledCamera";
 
 function App() {
-  useEffect(() => {
-    const root = document.getElementById("root");
-    if (root) {
-      createRoot(root).render(<App />);
-    }
-  }, []);
   return (
-    <div id="canvas-container">
-      <Canvas>
-        <ambientLight intensity={0.1} />
-        <directionalLight color="red" position={[0, 0, 5]} />
-        <mesh>
-          <boxGeometry args={[2, 2, 2]} />
-          <meshStandardMaterial />
-        </mesh>
+    <div>
+      <Canvas style={{ height: "100vh", background: "#f0f0f0" }} shadows>
+        <ambientLight intensity={0.8} />
+        <directionalLight
+          intensity={1.2}
+          color="white"
+          position={[7, 10, 13]}
+          castShadow
+        />
+        <Suspense fallback={null}>
+          <OceanScene />
+          <BottleScene />
+          <HouseScene />
+          <KeyboardControlledCamera />
+        </Suspense>
       </Canvas>
     </div>
   );
